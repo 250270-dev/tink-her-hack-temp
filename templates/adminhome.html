@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Home</title>
+    <style>
+        body {
+            background: #f3e8ff; /* Light purple background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styling */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #7e22ce; /* medium purple */
+            border: 3px solid #4b0082; /* dark purple border */
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        header h2 {
+            margin: 0;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        header .logout {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-decoration: none;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #4b0082;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        h3 {
+            color: #4b0082;  /* dark purple */
+            text-align: center;
+        }
+
+        /* Upload box styling */
+        .upload-box {
+            max-width: 500px;
+            background: white;
+            margin: 0 auto 30px auto; /* center horizontally, space below */
+            padding: 20px;
+            border: 2px solid #4b0082;
+            border-radius: 10px;
+        }
+
+        .upload-box input, .upload-box textarea, .upload-box button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .upload-box button {
+            background-color: #7e22ce;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .upload-box button:hover {
+            background-color: #4b0082;
+        }
+
+        /* Events list styling */
+        li {
+            cursor: pointer;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 2px solid #4b0082;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .summary-container {
+            flex: 1;
+        }
+
+        .details {
+            display: none;
+            margin-left: 20px;
+            color: #555;
+        }
+
+        button.delete-btn {
+            margin-top: 5px;
+        }
+
+        .countdown {
+            font-weight: bold;
+            color: #b91cdb; /* purple */
+            margin-left: 15px;
+            white-space: nowrap;
+        }
+    </style>
+    <script>
+        function getTimeRemaining(eventDate) {
+            const now = new Date();
+            const end = new Date(eventDate);
+            const diff = end - now;
+
+            if (diff <= 0) return "Started";
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        async function loadEvents() {
+            const res = await fetch('/admin/get-events');
+            const data = await res.json();
+            const list = document.getElementById('events-list');
+            list.innerHTML = '';
+
+            data.events.forEach(e => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="summary-container">
+                        <span class="summary">
+                            <b>${e.name}</b> - ${new Date(e.date).toLocaleString()}
+                        </span>
+                        <div class="details">
+                            <p><b>Location:</b> ${e.location}</p>
+                            <p><b>Category:</b> ${e.category}</p>
+                            <p><b>Description:</b> ${e.description}</p>
+                            <p><a href="${e.link}" target="_blank">${e.link}</a></p>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                    <div class="countdown"></div>
+                `;
+
+                const detailsDiv = li.querySelector('.details');
+
+                // Toggle details on click
+                li.querySelector('.summary').addEventListener('click', () => {
+                    detailsDiv.style.display =
+                        detailsDiv.style.display === 'none' || detailsDiv.style.display === ''
+                        ? 'block'
+                        : 'none';
+                });
+
+                // Delete button
+                li.querySelector('.delete-btn').addEventListener('click', async (event) => {
+                    event.stopPropagation(); // prevent toggling details
+                    const res = await fetch(`/admin/delete-event/${e.id}`, { method: 'DELETE' });
+                    const data = await res.json();
+                    alert(data.message);
+                    loadEvents();
+                });
+
+                // Countdown
+                const countdownDiv = li.querySelector('.countdown');
+                function updateCountdown() {
+                    countdownDiv.textContent = getTimeRemaining(e.date);
+                }
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+
+                list.appendChild(li);
+            });
+        }
+
+        window.onload = loadEvents;
+
+        async function uploadEvent(event) {
+            event.preventDefault();
+            const form = document.getElementById('event-form');
+            const formData = new FormData(form);
+            const res = await fetch('/admin/upload-event', { method: 'POST', body: formData });
+            const data = await res.json();
+            alert(data.message);
+            form.reset();
+            loadEvents();
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h2>Admin Dashboard</h2>
+        <a class="logout" href="/logout">Logout</a>
+    </header>
+    <p style="text-align:center;">Welcome, Admin!</p>
+
+    <!-- Upload Event Box -->
+    <div class="upload-box">
+        <h3>Upload Event</h3>
+        <form id="event-form" onsubmit="uploadEvent(event)">
+            Name: <input type="text" name="event_name" required>
+            Date: <input type="datetime-local" name="event_date" required>
+            Location: <input type="text" name="event_location" required>
+            Description: <textarea name="event_description"></textarea>
+            Category: <input type="text" name="event_category">
+            Link: <input type="url" name="event_link">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <!-- Events List -->
+    <h3>All Events</h3>
+    <ul id="events-list"></ul>
+
+</body>
+</html>
