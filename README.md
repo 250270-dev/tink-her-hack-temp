@@ -81,14 +81,8 @@ python app.py
 
 #### Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+https://drive.google.com/drive/folders/19ySq80hWc6OI0ot3DmJ5PGIWkfnz5WM6?usp=sharing
+screenshorts of different features login ,register ,student homepage,admin homepage
 
 #### Diagrams
 
@@ -99,7 +93,7 @@ python app.py
 
 **Application Workflow:**
 
-![Workflow](docs/workflow.png)
+
 *Add caption explaining your workflow*
 
 ---
@@ -359,10 +353,9 @@ python script.py -v --format json data.json
 ## Project Demo
 
 ### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
+https://drive.google.com/file/d/1K4cd9DvsGWOcMFcx4bkILz3iT8AR0mDv/view?usp=sharing
 
-*Explain what the video demonstrates - key features, user flow, technical highlights*
-
+It shows the keyfeatures of the website which is 
 ### Additional Demos
 [Add any extra demo materials/links - Live site, APK download, online demo, etc.]
 
@@ -372,12 +365,12 @@ python script.py -v --format json data.json
 
 If you used AI tools during development, document them here for transparency:
 
-**Tool Used:** [e.g., GitHub Copilot, v0.dev, Cursor, ChatGPT, Claude]
+**Tool Used:** Chat gpt
 
 **Purpose:** [What you used it for]
-- Example: "Generated boilerplate React components"
-- Example: "Debugging assistance for async functions"
-- Example: "Code review and optimization suggestions"
+
+- Debugging assistance for async functions
+- Code review and optimization suggestions
 
 **Key Prompts Used:**
 - "Create a REST API endpoint for user authentication"
