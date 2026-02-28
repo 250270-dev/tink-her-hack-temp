@@ -2,27 +2,26 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# CAMPUSCONNECT 🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: Inferno
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
-
+- Member 1: Niharika Hareendran - TKM College Of Engineering
+- Member 2: Sivanya T - TKM College Of Engineering
 ### Hosted Project Link
 [mention your project hosted link here]
 
 ### Project Description
-[2-3 lines about what your project does]
+The CAMPUSCONNECT is a web-based application  used to manage and organise events efficiently.It alllows the admin to add the events and automatically sorts them based on date and time.Students can view upcoming events with countdown timer and expired events are removed automatically
 
 ### The Problem statement
-[What problem are you solving?]
+Managing events manually can be difficult and time consuming. There is no proper system to solve events based on date and time,and students may miss important events. Therfore, a system is needed to automatically manage ,sort and display event with a countdown timer
 
 ### The Solution
-[How are you solving it?]
+The solution is to develop a web based system that automatically sorts events by date and time and display them with a countdown.This helps manage events efficiently and removes expired events automatically
 
 ---
 
@@ -31,10 +30,10 @@
 ### Technologies/Components Used
 
 **For Software:**
-- Languages used: [e.g., JavaScript, Python, Java]
-- Frameworks used: [e.g., React, Django, Spring Boot]
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: [e.g., VS Code, Git, Docker]
+- Languages used: Python, HTML, CSS, JavaScript
+- Frameworks used: Flask
+- Libraries used: SQLAlchemy,Werkzeug
+- Tools used:  VS Code, Git ,SQLite ,Browser
 
 **For Hardware:**
 - Main components: [List main components]
@@ -46,13 +45,12 @@
 ## Features
 
 List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
-
----
-
+- Admin Login & Dashboard: Allows admins to log in securely and manage events from a dedicated dashboard.
+- Student Login & View: Students can log in to view all upcoming events and their details.
+- Event Management: Admins can create, update, and delete events
+- Event Details & Countdown: Each event displays its location, category, description, link, and a live countdown timer until the event starts.
+- Responsive User Interface: The platform is styled with HTML, CSS, and works well on different devices
+- Secure Authentication: Passwords are hashed using Werkzeug, and role-based access ensures security
 ## Implementation
 
 ### For Software:
@@ -64,7 +62,7 @@ List the key features of your project:
 
 #### Run
 ```bash
-[Run commands - e.g., npm start, python app.py]
+python app.py
 ```
 
 ### For Hardware:
